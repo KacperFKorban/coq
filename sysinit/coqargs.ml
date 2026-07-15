@@ -407,6 +407,8 @@ let parse_args ~init arglist : t * string list =
 
     |"-diffs" ->
       add_set_option oval ["Diffs"] @@ OptionSet (Some (next ()))
+    |"-print-goal-on-error" ->
+      add_set_option oval ["Printing"; "Goal"; "On"; "Error"] (OptionSet None)
     |"-emacs" -> set_emacs oval
     |"-impredicative-set" ->
       set_logic (fun o -> { o with impredicative_set = true }) oval

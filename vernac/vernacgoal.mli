@@ -19,6 +19,10 @@ open Evd
 *)
 val pr_open_subgoals : ?quiet:bool -> ?oldp:Proof.t option option -> ?flags:PrintingFlags.t ->
   Proof.t -> Pp.t
+
+(** Print the proof view when [Printing Goal On Error] is set. *)
+val print_goal_on_error : Proof.t option -> unit
+
 val pr_nth_open_subgoal : ?flags:PrintingFlags.t ->
   ?oldp:Proof.t option option -> proof:Proof.t -> int -> Pp.t
 

@@ -35,6 +35,12 @@ and come back to the Rocq toplevel with the command ``#go;;``.
    This :term:`flag`, off by default, causes `rocq top` to exit with status code
    ``1`` if a command produces an error instead of recovering from it.
 
+.. flag:: Printing Goal On Error
+
+   This :term:`flag`, off by default, prints the current proof view after an
+   error that occurs while a proof is open. It can also be enabled from the
+   command line with ``-print-goal-on-error``.
+
 Batch compilation (rocq compile)
 --------------------------------
 
@@ -505,6 +511,8 @@ and ``rocq repl``, unless stated otherwise:
   between proof steps.  ``on`` highlights added tokens, ``removed`` highlights both added and
   removed tokens.  Requires that ``-color`` is enabled.  (see Section
   :ref:`showing_diffs`).
+:-print-goal-on-error: Print the current proof view after an error that occurs
+  while a proof is open. Equivalent to setting :flag:`Printing Goal On Error`.
 :-beautify: Pretty-print each command to *file.beautified* when
   compiling *file.v*. Very buggy.
 :-emacs, -ide-slave: Start a special toplevel to communicate with a

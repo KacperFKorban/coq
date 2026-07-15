@@ -539,6 +539,8 @@ let read_and_execute ~state =
     let loc = Loc.get_loc info in
     let msg = CErrors.iprint (e, info) in
     TopErr.print_error_for_buffer ?loc Feedback.Error msg top_buffer;
+    (try Vernacgoal.print_goal_on_error state.Vernac.State.proof
+     with exn -> Topfmt.print_err_exn exn);
     if exit_on_error () then exit 1;
     true, state
 

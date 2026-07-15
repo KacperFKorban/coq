@@ -80,6 +80,7 @@ let print_usage_common co command =
 \n  -init-file f           set the rcfile to f\
 \n  -bt                    print OCaml backtraces\
 \n  -diffs (on|off|removed) highlight differences between proof steps\
+\n  -print-goal-on-error   print the current proof view after an error\
 \n  -impredicative-set     set sort Set impredicative\
 \n  -allow-sprop           allow using the proof irrelevant SProp sort\
 \n  -disallow-sprop        forbid using the proof irrelevant SProp sort\

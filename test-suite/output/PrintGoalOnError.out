@@ -1,0 +1,15 @@
+File "./output/PrintGoalOnError.v", line 6, characters 8-9:
+Error:
+In environment
+A : Type
+x : A
+The term "A" has type "Type" while it is expected to have type "A".
+
+1 goal
+  
+  A : Type
+  x : A
+  ============================
+  A
+
+coqc exited with code 1

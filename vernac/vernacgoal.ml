@@ -39,6 +39,12 @@ let { Goptions.get = should_gname } =
     ~value:false
     ()
 
+let { Goptions.get = should_print_goal_on_error } =
+  Goptions.declare_bool_option_and_ref
+    ~key:["Printing";"Goal";"On";"Error"]
+    ~value:false
+    ()
+
 let print_goal_name sigma ev =
   should_gname () || Evd.evar_has_unambiguous_name ev sigma
 
@@ -453,6 +459,11 @@ let pr_open_subgoals ?(quiet=false) ?(oldp=None) ?(flags=current_combined()) pro
      pr_subgoals ~flags ~pr_first:true ?goalmap sigma ~entry ~shelf ~stack:[]
         ~unfocused:unfocused_if_needed ~goals:bgoals_focused
   end
+
+let print_goal_on_error = function
+  | Some proof when should_print_goal_on_error () ->
+    Feedback.msg_notice (pr_open_subgoals proof)
+  | None | Some _ -> ()
 
 let pr_nth_open_subgoal ?(flags=current_combined()) ?(oldp=None) ~proof n =
   let Proof.{goals;sigma} = Proof.data proof in

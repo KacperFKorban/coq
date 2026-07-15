@@ -1,0 +1,48 @@
+
+Rocq < 
+Rocq < Rocq < 1 goal
+  
+  ============================
+  forall A : Type, A -> A
+
+Unnamed_thm < 
+Unnamed_thm < 1 goal
+  
+  A : Type
+  x : A
+  ============================
+  A
+
+Unnamed_thm < Toplevel input, characters 8-9:
+>   exact A.
+>         ^
+Error:
+In environment
+A : Type
+x : A
+The term "A" has type "Type" while it is expected to have type "A".
+1 goal
+  
+  A : Type
+  x : A
+  ============================
+  A
+
+Unnamed_thm < Unnamed_thm < 
+Unnamed_thm < Toplevel input, characters 8-9:
+>   exact A.
+>         ^
+Error:
+In environment
+A : Type
+x : A
+The term "A" has type "Type" while it is expected to have type "A".
+
+Unnamed_thm < Unnamed_thm < 
+Rocq < Rocq < Toplevel input, characters 7-25:
+> Check missing_identifier.
+>       ^^^^^^^^^^^^^^^^^^
+Error: The reference missing_identifier was not found in the current
+environment.
+
+Rocq < 
