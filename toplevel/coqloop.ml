@@ -432,6 +432,10 @@ let show_proof_diff_cmd ~state diff_opt =
       let old = Stm.get_prev_proof ~doc:state.doc state.sid in
       Proof_diffs.diff_proofs ~flags:(PrintingFlags.current()) ~diff_opt ?old proof
 
+let try_print_goal_on_error proof =
+  try Vernacgoal.print_goal_on_error (proof ())
+  with exn -> Topfmt.print_err_exn exn
+
 let ml_toplevel_state = ref None
 let ml_toplevel_include_ran = ref false
 
@@ -539,8 +543,7 @@ let read_and_execute ~state =
     let loc = Loc.get_loc info in
     let msg = CErrors.iprint (e, info) in
     TopErr.print_error_for_buffer ?loc Feedback.Error msg top_buffer;
-    (try Vernacgoal.print_goal_on_error state.Vernac.State.proof
-     with exn -> Topfmt.print_err_exn exn);
+    try_print_goal_on_error (fun () -> state.Vernac.State.proof);
     if exit_on_error () then exit 1;
     true, state
 

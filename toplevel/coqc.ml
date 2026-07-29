@@ -56,10 +56,7 @@ let coqc_run copts ~opts injections =
   with exn ->
     flush_all();
     Topfmt.print_err_exn exn;
-    (try
-       let proof = Vernacstate.Declare.give_me_the_proof_opt () [@ocaml.warning "-3"] in
-       Vernacgoal.print_goal_on_error proof
-     with exn -> Topfmt.print_err_exn exn);
+    Coqloop.try_print_goal_on_error Vernacstate.Declare.give_me_the_proof_opt;
     flush_all();
     let exit_code = CErrors.exit_code exn in
     exit exit_code

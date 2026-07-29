@@ -29,6 +29,9 @@ val ml_toplevel_state : Vernac.State.t option ref
 (** Whether the "include" file was already run at least once *)
 val ml_toplevel_include_ran : bool ref
 
+(** Best-effort printing of the current proof after an error. *)
+val try_print_goal_on_error : (unit -> Proof.t option) -> unit
+
 (** The main loop *)
 val loop : state:Vernac.State.t -> Vernac.State.t
 
