@@ -1,0 +1,13 @@
+File "./output/unused_parameters.v", line 5, characters 11-17:
+Warning: Unused parameter: unused. [unused-parameter,vernacular,default]
+File "./output/unused_parameters.v", line 6, characters 11-18:
+Warning: Unused parameters: first and second.
+[unused-parameter,vernacular,default]
+File "./output/unused_parameters.v", line 10, characters 6-13:
+Warning: Unused parameter: q. [unused-parameter,vernacular,default]
+File "./output/unused_parameters.v", line 13, characters 6-16:
+Warning: Unused parameter: HP. [unused-parameter,vernacular,default]
+File "./output/unused_parameters.v", line 16, characters 6-18:
+Warning: Unused parameter: P. [unused-parameter,vernacular,default]
+File "./output/unused_parameters.v", line 22, characters 9-17:
+Warning: Unused parameter: unused. [unused-parameter,vernacular,default]

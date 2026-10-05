@@ -448,6 +448,22 @@ The following options modify the behavior of ``Proof using``.
 
    On by default.
 
+Unused parameter linting
+````````````````````````
+
+.. flag:: Lint Unused Parameters
+
+   When on, Rocq warns about named parameters that do not occur in the body of
+   a definition or completed proof.  Names beginning with ``_`` suppress the
+   warning, as do anonymous binders.  This flag is off by default.
+
+.. warn:: Unused parameter: @ident.
+   :name: unused-parameter
+
+   This warning reports a named parameter that does not occur in the
+   definition or proof body.  It is only emitted when :flag:`Lint Unused
+   Parameters` is on.
+
 ..  _`nameaset`:
 
 Name a set of section hypotheses for ``Proof using``

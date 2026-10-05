@@ -57,6 +57,53 @@ let fallback_loc ?(warn=true) name = function
       let () = if warn then warn_using_fallback_loc name in
       loc
 
+let { Goptions.get = lint_unused_parameters } =
+  Goptions.declare_bool_option_and_ref
+    ~key:["Lint"; "Unused"; "Parameters"]
+    ~value:false
+    ()
+
+let warn_unused_parameters =
+  CWarnings.create ~name:"unused-parameter" ~category:CWarnings.CoreCategories.vernacular
+    Pp.(fun ids -> str "Unused " ++ str (String.lplural ids "parameter") ++ str ":" ++
+        spc () ++ pr_enum Id.print ids ++ str ".")
+
+let unused_parameters typ body =
+  let rec product = function
+    | None -> None
+    | Some typ -> match Constr.kind typ with
+      | Constr.Cast (typ, _, _) -> product (Some typ)
+      | Constr.Prod (na, _, typ) -> Some (na.Context.binder_name, typ)
+      | _ -> None
+  in
+  let rec let_body = function
+    | None -> None
+    | Some typ -> match Constr.kind typ with
+      | Constr.Cast (typ, _, _) -> let_body (Some typ)
+      | Constr.LetIn (_, _, _, typ) -> Some typ
+      | _ -> Some typ
+  in
+  let rec collect typ body = match Constr.kind body with
+    | Constr.Cast (body, _, _) -> collect typ body
+    | Constr.LetIn (_, _, _, body) -> collect (let_body typ) body
+    | Constr.Lambda (body_na, _, body) ->
+      let na, typ = match product typ with
+        | Some (Names.Name.Name _ as na, typ) -> na, Some typ
+        | Some (Names.Name.Anonymous, typ) -> body_na.Context.binder_name, Some typ
+        | None -> body_na.Context.binder_name, None
+      in
+      let rest = collect typ body in
+      begin match na with
+      | Names.Name.Name id
+        when not (CString.is_prefix "_" (Id.to_string id)) && Vars.noccurn 1 body -> id :: rest
+      | Names.Name.Anonymous | Names.Name.Name _ -> rest
+      end
+    | Constr.Fix ((_, i), (_, types, bodies)) -> collect (Some types.(i)) bodies.(i)
+    | Constr.CoFix (i, (_, types, bodies)) -> collect (Some types.(i)) bodies.(i)
+    | _ -> []
+  in
+  collect typ body
+
 module CInfo = struct
 
   type 'constr t =
@@ -395,6 +442,17 @@ module ProofEntry = struct
     | DeferredOpaque { body; feedback_id } -> Future.force body, true, feedback_id
 
 end
+
+let lint_entry ?loc entry =
+  if not (lint_unused_parameters ()) then entry
+  else
+    let check body =
+      let unused = unused_parameters entry.proof_entry_type body in
+      if not (Flags.async_proofs_is_worker ()) && not (List.is_empty unused) then
+        warn_unused_parameters ?loc unused;
+      body
+    in
+    { entry with proof_entry_body = ProofEntry.map_entry_body ~f:check entry.proof_entry_body }
 
 let local_csts = Summary.ref ~name:"local-csts" Cset_env.empty
 
@@ -917,6 +975,7 @@ let register_definition_scheme ~internal ~name ~const:kn ~univs ?loc () =
 
 (* Locality stuff *)
 let declare_entry ~loc ~name ?(scope=Locality.default_scope) ?(clearbody=false) ~kind ~typing_flags ~user_warns ?hook ?(obls=[]) ~impargs ~uctx entry =
+  let entry = lint_entry ?loc entry in
   let should_suggest =
     ProofEntry.get_opacity entry
     && not (List.is_empty (Global.named_context()))
