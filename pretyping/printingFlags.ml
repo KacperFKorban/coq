@@ -39,6 +39,9 @@ let { Goptions.get = print_sort_quality } =
 let print_evar_arguments = make_flag ["Printing";"Existential";"Instances"] false
 
 (* detyping *)
+let print_binder_names = make_flag ["Printing";"Binder";"Names"] false
+
+(* detyping *)
 let { Goptions.get = print_wildcard } =
   Goptions.declare_bool_option_and_ref
     ~key:["Printing";"Wildcard"]
@@ -232,6 +235,7 @@ module Detype = struct
     qualities : bool;
     relevances : bool;
     evar_instances : bool;
+    binder_names : bool;
     wildcard : bool;
     fast_names : bool;
     synth_match_return : bool;
@@ -249,6 +253,7 @@ module Detype = struct
     qualities = print_sort_quality();
     relevances = print_relevances();
     evar_instances = !print_evar_arguments;
+    binder_names = !print_binder_names;
     wildcard = print_wildcard();
     fast_names = fast_name_generation();
     synth_match_return = synthetize_type();

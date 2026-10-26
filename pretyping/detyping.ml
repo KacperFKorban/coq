@@ -164,13 +164,14 @@ let fresh_id_in id avoid =
 let compute_name sigma ~let_in ~pattern flags avoid env na c =
 match avoid with
 | Nice (gen, avoid) ->
+  let keep_name = flags.flg.binder_names && not pattern && not (Name.is_anonymous na) in
   let flags =
     if flags.flg_isgoal then RenamingForGoal
     else if pattern then RenamingForCasesPattern (fst env, c)
     else RenamingElsewhereFor (fst env, c)
   in
   let na, avoid =
-    if let_in then compute_displayed_let_name_in gen (Global.env ()) sigma flags avoid na
+    if let_in || keep_name then compute_displayed_let_name_in gen (Global.env ()) sigma flags avoid na
     else compute_displayed_name_in gen (Global.env ()) sigma flags avoid na c
   in
   na, Nice (gen, avoid)

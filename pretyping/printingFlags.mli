@@ -16,6 +16,8 @@ module Detype : sig
     relevances : bool;
     (** If true, prints full local context of evars *)
     evar_instances : bool;
+    (** Preserve existing names of unused product and lambda binders. *)
+    binder_names : bool;
     wildcard : bool;
     fast_names : bool;
     synth_match_return : bool;

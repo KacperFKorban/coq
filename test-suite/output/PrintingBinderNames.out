@@ -1,0 +1,96 @@
+demo : forall n : nat, n = n -> True
+
+demo is not universe polymorphic
+Arguments demo n%_nat_scope H
+Expands to: Constant PrintingBinderNames.demo
+Declared in library PrintingBinderNames, line 2, characters 6-10
+named = fun (n : nat) (_ : n = n) => I
+     : forall n : nat, n = n -> True
+
+Arguments named n%_nat_scope H
+demo : forall (n : nat) (_ : @eq nat n n), True
+
+demo is not universe polymorphic
+Arguments demo n%_nat_scope H
+Expands to: Constant PrintingBinderNames.demo
+Declared in library PrintingBinderNames, line 2, characters 6-10
+demo : forall (n : nat) (H : n = n), True
+
+demo is not universe polymorphic
+Arguments demo n%_nat_scope H
+Expands to: Constant PrintingBinderNames.demo
+Declared in library PrintingBinderNames, line 2, characters 6-10
+*** [ demo : forall (n : nat) (H : n = n), True ]
+
+Arguments demo n%_nat_scope H
+named =
+fun (n : nat) (H : n = n) => I
+     : forall (n : nat) (H : n = n), True
+
+Arguments named n%_nat_scope H
+forall left right : nat, nat -> nat
+     : Set
+forall n : nat, n = n -> True
+     : Prop
+fun unused : nat => 0
+     : forall unused : nat, nat
+fun _ : nat => 0
+     : nat -> nat
+forall (n : nat) (H : n = n) (n0 : nat), n0 = n0
+     : Prop
+forall H : nat, H = H
+     : Prop
+forall H : nat, True
+     : Prop
+implicit_demo : forall {A : Type} [x : A] (H : x = x), True
+
+implicit_demo is not universe polymorphic
+Arguments implicit_demo {A}%_type_scope [x] H
+Expands to: Constant PrintingBinderNames.implicit_demo
+Declared in library PrintingBinderNames, line 30, characters 6-19
+(forall H : True, True) -> True
+     : Prop
+1 goal
+  
+  ============================
+  forall (n : nat) (H : n = n), True
+demo : forall (n : nat) (H : @eq nat n n), True
+
+demo is not universe polymorphic
+Arguments demo n%_nat_scope H
+Expands to: Constant PrintingBinderNames.demo
+Declared in library PrintingBinderNames, line 2, characters 6-10
+demo : forall n : nat, n = n -> True
+
+demo is not universe polymorphic
+Arguments demo n%_nat_scope H
+Expands to: Constant PrintingBinderNames.demo
+Declared in library PrintingBinderNames, line 2, characters 6-10
+named = fun (n : nat) (_ : n = n) => I
+     : forall n : nat, n = n -> True
+
+Arguments named n%_nat_scope H
+demo : forall (n : nat) (H : n = n), True
+
+demo is not universe polymorphic
+Arguments demo n%_nat_scope H
+Expands to: Constant PrintingBinderNames.demo
+Declared in library PrintingBinderNames, line 2, characters 6-10
+demo : forall n : nat, n = n -> True
+
+demo is not universe polymorphic
+Arguments demo n%_nat_scope H
+Expands to: Constant PrintingBinderNames.demo
+Declared in library PrintingBinderNames, line 2, characters 6-10
+demo : forall (n : nat) (H : n = n), True
+
+demo is not universe polymorphic
+Arguments demo n%_nat_scope H
+Expands to: Constant PrintingBinderNames.demo
+Declared in library PrintingBinderNames, line 2, characters 6-10
+demo : forall (n : nat) (H : n = n), True
+
+demo is not universe polymorphic
+Arguments demo n%_nat_scope H
+Expands to: Constant PrintingBinderNames.demo
+Declared in library PrintingBinderNames, line 2, characters 6-10

@@ -571,6 +571,27 @@ Requests to the environment
 Printing flags
 -------------------------------
 
+.. flag:: Printing Binder Names
+
+   Preserve existing names of :g:`forall` and :g:`fun` binders, even when
+   the bound variable does not occur in the body. This flag is off by default.
+   It affects term printing in general, including :cmd:`About`, :cmd:`Print`,
+   :cmd:`Check`, and proof goals. Names may still be changed to avoid name
+   clashes. This flag does not assign names to anonymous binders.
+
+   .. rocqtop:: all
+
+      Axiom demo : forall (n : nat) (H : n = n), True.
+      About demo.
+      Set Printing Binder Names.
+      About demo.
+      Unset Printing Binder Names.
+
+   This flag is independent of :flag:`Printing All`, which does not
+   preserve unused binder names on its own.
+   Unlike :flag:`Fast Name Printing`, it keeps the usual name-generation
+   algorithm and arrow notation for anonymous products.
+
 .. flag:: Fast Name Printing
 
    When this :term:`flag` is turned on, Rocq uses an asymptotically faster algorithm for the
